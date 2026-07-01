@@ -111,6 +111,35 @@ DELETE /departments/{id}
 
 ---
 
+## Architecture
+
+```mermaid
+flowchart TD
+
+    A[Client / Postman] --> B[REST Controller]
+
+    B --> C[JWT Authentication Filter]
+
+    C --> D{JWT Valid?}
+
+    D -- No --> E[401 Unauthorized]
+
+    D -- Yes --> F[SecurityContextHolder]
+
+    F --> G[Service Layer]
+
+    G --> H[Student Service]
+    G --> I[Department Service]
+    G --> J[Authentication Service]
+
+    H --> K[Student Repository]
+    I --> L[Department Repository]
+    J --> M[User Repository]
+
+    K --> N[(MySQL Database)]
+    L --> N
+    M --> N
+```
 ## Future Improvements
 
 - Refresh Tokens
